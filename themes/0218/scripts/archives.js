@@ -1,17 +1,17 @@
-hexo.extend.generator.register('archives', site => {
-  const posts = site.posts;
+hexo.extend.generator.register('archives', (locals) => {
+  const posts = locals.posts;
+  const data = [];
 
-  let data = [];
   posts.forEach((post) => {
     data.push({
       title: post.title,
       date: post.date,
-      path: post.path
+      path: post.path,
     });
-  })
+  });
 
   return {
-    path: "data/archives.json",
-    data: JSON.stringify(data)
+    path: 'archives.json',
+    data: JSON.stringify(data),
   };
 });
