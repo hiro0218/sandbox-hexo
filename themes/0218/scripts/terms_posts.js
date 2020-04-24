@@ -27,3 +27,33 @@ hexo.extend.generator.register('tags_posts', (locals) => {
     data: JSON.stringify(data),
   };
 });
+
+hexo.extend.generator.register('categories_posts', (locals) => {
+  const categories = locals.categories;
+  const data = [];
+
+  for (let i = 0; i < categories.length; i++) {
+    const category = categories.data[i];
+    const posts = category.posts;
+
+    data.push({
+      name: category.name,
+      slug: category.slug,
+      count: category.length,
+      posts: [],
+    });
+
+    for (let j = 0; j < posts.length; j++) {
+      const post = posts.data[j];
+      data[i].posts.push({
+        title: post.title,
+        path: encodeURI(post.path),
+      });
+    }
+  }
+
+  return {
+    path: 'categories_posts.json',
+    data: JSON.stringify(data),
+  };
+});
